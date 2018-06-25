@@ -29,12 +29,12 @@ const ReviewCtrl = {
     let body = { 
       id: req.params.id, 
       customer_name: req.body.customer_name,
-      rating: req.body.rating || -1,
+      rating: req.body.rating,
       date: req.body.date,
       title: req.body.title,
       review: req.body.review,
-      helpful_count: req.body.helpful_count || -1,
-      productId: req.body.productId || -1,
+      helpful_count: req.body.helpful_count,
+      productId: req.body.productId,
       verified: req.body.verified ? (req.body.verified === 'true' ? true : false) : undefined
     };
     ReviewModel.put (body, (err, data) => {
