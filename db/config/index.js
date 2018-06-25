@@ -1,14 +1,25 @@
-const Sequelize = require('sequelize');
+const { MongoClient } = require('mongodb');
+const url = "mongodb://localhost:27017/reviews";
 
-const db = new Sequelize('reviews_ratings', 'root', '', {
-  host: 'localhost',
-  dialect: 'postgres',
+const database;
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  console.log("created reviews db");
+  database = db.db('reviews');
+  db.db('reviews').createCollection("products", function(err, res) {
+    if (err) throw err;
+    console.log("created products collection");
+
+    db.db('reviews').createCollection("reviews", function(err, res) {
+      if (err) throw err;
+      console.log("created reviews collection");
+      db.close();
+    });
+
+  });
 });
 
-db.authenticate()
-  .then(() => console.log('Successfully connected to database'))
-  .catch(err => console.log('Unable to connect to the database', err))
-  
 module.exports = {
-  db
+  database
 }

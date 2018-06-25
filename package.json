@@ -30,6 +30,7 @@
     "helmet": "^3.12.1",
     "jest": "^23.1.0",
     "lato-font": "^3.0.0",
+    "mongodb": "^3.0.10",
     "nodemon": "^1.17.5",
     "opinion-lexicon": "0.0.2",
     "pg": "^7.4.3",
