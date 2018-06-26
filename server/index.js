@@ -4,7 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
 const { Router } = require('./router');
-require('../db/models/');
+require('../db/config/');
 
 const corOpts = {
   "origin": "*",
