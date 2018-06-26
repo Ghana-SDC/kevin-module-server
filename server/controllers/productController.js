@@ -22,24 +22,23 @@ const ProductCtrl = {
     })
   },
 
-  // put: (req, res) => {
-  //   let body = {
-  //     id: req.params.id,
-  //     name: req.body.name
-  //   }
-  //   console.log(body);
-  //   ProductModel.put(body, (err, data) => {
-  //     (err) && res.send(err).status(400);
-  //     res.send(data).status(201);
-  //   })
-  // },
+  put: (req, res) => {
+    let body = {
+      id: req.params.id,
+      name: req.body.name
+    }
+    ProductModel.put(body, (err, data) => {
+      (err) && res.send(err).status(400);
+      res.send(data).status(201);
+    })
+  },
 
-  // delete: (req, res) => {
-  //   ProductModel.delete(req.params.id, (err, data) => {
-  //     (err) && res.send(err).status(400);
-  //     res.send(data).status(200);
-  //   })
-  // }
+  delete: (req, res) => {
+    ProductModel.delete(req.params.id, (err, data) => {
+      (err) && res.send(err).status(400);
+      res.send(data).status(200);
+    })
+  }
 };
 
 module.exports = {
