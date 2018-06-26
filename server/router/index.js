@@ -14,7 +14,7 @@ Router.post('/product/:name', ProductCtrl.post);
 Router.put('/reviews/:id', ReviewCtrl.put);
 Router.put('/product/:id', ProductCtrl.put);
 
-// Router.delete('/reviews/:id', ReviewCtrl.delete);
+Router.delete('/reviews/:id', ReviewCtrl.delete);
 Router.delete('/product/:id', ProductCtrl.delete);
 
 module.exports = {
