@@ -28,10 +28,9 @@ const toTitleCase = (str) => {
   });
 }
 
-// const stream = fs.createWriteStream('../reviews.csv');
-
 const writeToFile = (writer) => {
-  let i = 1000000;
+  var start = new Date().getTime();
+  let i = 10000000;
   const write = () => {
     let ok = true;
     do {
@@ -47,6 +46,8 @@ const writeToFile = (writer) => {
       let data = [customer_name, rating, title, date, review, helpful_count, verified, productId];
       if (i === 0) {
         writer.write(data.join(','));
+        var end = new Date().getTime();
+        console.log((end - start)/1000);
       } else {
         ok = writer.write(data.join(',') + '\n');
       }
@@ -58,41 +59,8 @@ const writeToFile = (writer) => {
   write();
 }
 
-for (let i = 1; i <= 10; i++) {
-  let stream = fs.createWriteStream(`../reviews${i}.csv`);
-  writeToFile(stream);
-}
-
-
-// const today = new Date();
-// const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-// const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-// const dateTime = date+' '+time;
-
-// console.log(dateTime);
-// console.log(new Date());
-// console.log(faker.name.findName(), faker.random.number( { min: 1, max: 5 } ), faker.random.word(), faker.commerce.product());
-// console.log(faker.date.month(), faker.random.number( { min: 1, max: 31 } ),', ', faker.random.number( { min: 2008, max: 2018 } ));
-
-
-// let rating = faker.random.number( { min: 1, max: 5 } );
-// // let review = (rating >= 4 ? : )
-
-// console.log()
-
-
-// let record = {
-//   customer_name: faker.name.findName(),
-//   rating: rating,
-//   title: faker.commerce.product(),
-//   date: `${faker.date.month()} ${faker.random.number( { min: 1, max: 31 } )}, ${faker.random.number( { min: 2008, max: 2018 } )}`,
-//   review:  '',
-//   helpful_count: faker.random.number( { min: 1, max: 1000 } ),
-//   verified: faker.random.boolean(),
-//   productId: faker.random.number( { min: 1, max: 10000000 } )
-// }
-
-// console.log(record);
+let stream = fs.createWriteStream(`../reviews.csv`);
+writeToFile(stream);
 
 //COPY reviews(customer_name, rating, title, date, review, helpful_count, verified, "productId")  FROM '/Users/Kevin/Documents/Capstone/SDC/review-rating-component/reviews.csv' with (FORMAT csv);
 //COPY products(name)  FROM '/Users/Kevin/Documents/Capstone/SDC/review-rating-component/products.csv' with (FORMAT csv);

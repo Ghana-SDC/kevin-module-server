@@ -3,10 +3,10 @@ const mongo = require('mongodb');
 
 const ReviewModel = {
   get: (id, callback) => {
-    const o_id = new mongo.ObjectID(id);
     MongoClient.connect(url, (err, db) => {
       if (err) throw err;
-      db.db('reviews').collection('reviews').findOne({ _id: o_id }, (err, res) => {
+      let query = {"productId": Number(id)};
+      db.db('reviews').collection('reviews').find(query).toArray((err, res) => {
         if (err) callback(err, null);
         callback(null, res);
       });

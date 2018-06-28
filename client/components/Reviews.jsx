@@ -19,7 +19,7 @@ export default class Reviews extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 1,
+      id: 8770860,
       reviews: [],
     };
     this.getProductReviews = this.getProductReviews.bind(this);
