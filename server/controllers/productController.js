@@ -24,10 +24,10 @@ const ProductCtrl = {
 
   put: (req, res) => {
     let body = {
-      id: req.params.id,
+      id: req.body.id,
       name: req.body.name
     }
-    ProductModel.put(body, (err, data) => {
+    ProductModel.put(req.params._id, body, (err, data) => {
       (err) && res.send(err).status(400);
       res.send(data).status(201);
     })

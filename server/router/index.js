@@ -12,7 +12,7 @@ Router.post('/reviews/', ReviewCtrl.post);
 Router.post('/product/:name', ProductCtrl.post);
 
 Router.put('/reviews/:id', ReviewCtrl.put);
-Router.put('/product/:id', ProductCtrl.put);
+Router.put('/product/:_id', ProductCtrl.put);
 
 Router.delete('/reviews/:id', ReviewCtrl.delete);
 Router.delete('/product/:id', ProductCtrl.delete);

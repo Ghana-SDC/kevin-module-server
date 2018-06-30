@@ -43,7 +43,7 @@ const writeToFile = (writer) => {
       let helpful_count = faker.random.number( { min: 1, max: 1000 } );
       let verified = faker.random.boolean();
       let productId = faker.random.number( { min: 1, max: 10000000 } );
-      let data = [customer_name, rating, title, date, review, helpful_count, verified, productId];
+      let data = [customer_name, rating, title, date, review, helpful_count, verified, productId].join('');
       if (i === 0) {
         writer.write(data.join(','));
         var end = new Date().getTime();

@@ -24,7 +24,7 @@ const ReviewCtrl = {
       helpful_count: Number(req.body.helpful_count),
       productId: Number(req.body.productId),
       verified:  req.body.verified === 'true' ? true : false,
-      updatedAt: new Date(Date.now()).toISOString()
+      updated_at: new Date(Date.now()).toISOString()
     };
     ReviewModel.post(body, (err, data) => {
       (err) && res.send(err).status(400);
