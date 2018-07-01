@@ -22,7 +22,7 @@ const ReviewCtrl = {
       title: req.body.title,
       review: req.body.review,
       helpful_count: Number(req.body.helpful_count),
-      productId: Number(req.body.productId),
+      product_id: Number(req.body.productId),
       verified:  req.body.verified === 'true' ? true : false,
       updated_at: new Date(Date.now()).toISOString()
     };

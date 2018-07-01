@@ -1,0 +1,18 @@
+config:
+  target: 'http://127.0.0.1:2106'
+  phases:
+    - duration: 10
+      arrivalRate: 100
+  processor: "helpers/converter.js"
+  variables:
+    id:
+      - "1"
+scenarios:
+  - flow:
+    - loop:
+      - get:
+          url: "/api/reviews/{{ id }}"
+          beforeRequest: "convertIDToInt"
+          json:
+            id: "{{ id }}"
+      count: 10

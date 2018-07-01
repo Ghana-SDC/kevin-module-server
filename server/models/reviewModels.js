@@ -3,7 +3,7 @@ const { getDB } = require('../../db/config');
 
 const ReviewModel = {
   get: (id, callback) => {
-    const query = {"product_id": Number(id)};
+    const query = {"product_id": id};
     const db = getDB();
     db.collection('reviews').find(query).toArray((err, res) => {
       if (err) callback(err, null);

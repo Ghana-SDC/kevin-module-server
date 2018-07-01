@@ -1,0 +1,14 @@
+config:
+  target: 'http://127.0.0.1:2106'
+  phases:
+    - duration: 10
+      arrivalRate: 10
+  variables:
+    name:
+      - "artillery-test-001"
+scenarios:
+  - flow:
+    - post:
+        url: "/api/product/{{ name }}"
+        json:
+          name: "{{ name }}"
