@@ -1,25 +1,21 @@
 config:
   target: 'http://127.0.0.1:2106'
+  http:
+    pool: 20
   phases:
     - duration: 10
-      arrivalRate: 1000
-  processor: "helpers/converter.js"
-  variables:
-    id:
-      - "1"
+      arrivalRate: 100
 scenarios:
   - flow:
-    # - loop:
-      - get:
-          url: "/api/product/{{ id }}"
-          beforeRequest: "convertIDToInt"
+    - loop:
+      - post:
+          url: "/api/reviews/"
           json:
-            id: "{{ id }}"
-      # count: 2
-            # - get:
-    #     url: "/api/reviews/:id"
-    # - post:
-    #     url: "/api/reviews/"
-    #     body: 
-    # - post:
-    #     url: "/api/product/:name"
+            customer_name: "Kevin Tester"
+            rating: 6
+            title: "THIS IS A TEST"
+            review: "THIS IS MY TEST REVIEW"
+            helpful_count: -1
+            productId: "9500000"
+            verified: "true"
+      count: 20

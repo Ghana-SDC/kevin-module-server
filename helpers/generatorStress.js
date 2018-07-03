@@ -20,7 +20,7 @@ function generateRandomProductData(userContext, events, done) {
       count++;
     }
   }
-  const id = faker.random.number({min: 0, max: 10000000});
+  const id = faker.random.number({min: 1, max: 10000000});
   const name = toTitleCase(words.join(' '));
   userContext.vars.name = name;
   userContext.vars.id = id;

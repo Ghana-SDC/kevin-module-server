@@ -1,14 +1,13 @@
 config:
   target: 'http://127.0.0.1:2106'
+  http:
+    pool: 20
   phases:
     - duration: 10
-      arrivalRate: 10
-  variables:
-    name:
-      - "artillery-test-001"
+      arrivalRate: 100
 scenarios:
   - flow:
-    - post:
-        url: "/api/product/{{ name }}"
-        json:
-          name: "{{ name }}"
+    - loop:
+      - post:
+          url: "/api/product/artillery-test-post"
+      count: 20

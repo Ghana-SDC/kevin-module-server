@@ -16,3 +16,4 @@ reviews10.csv
 products.csv
 mongo-products.csv
 config/
+node_modules/

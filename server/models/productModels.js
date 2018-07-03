@@ -2,8 +2,9 @@ const mongo = require('mongodb');
 const { getDB } = require('../../db/config');
 
 const ProductModel = {
-  get: (_id, callback) => {
+  get: (id, callback) => {
     const db = getDB();
+    let _id = new mongo.ObjectID(id);
     db.collection('products').findOne({ _id: _id }, (err, res) => {
       if (err) callback(err, null);
       callback(null, res);

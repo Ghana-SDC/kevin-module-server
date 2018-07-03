@@ -3,7 +3,7 @@ const url = "mongodb://localhost:27017/reviews";
 
 let _db;
 
-MongoClient.connect(url, { poolSize: 10}, function(err, client) {
+MongoClient.connect(url, { poolSize: 20}, function(err, client) {
   if (err) throw err;
   console.log("created reviews db");
   _db = client.db('reviews');

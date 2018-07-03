@@ -1,18 +1,18 @@
 config:
   target: 'http://127.0.0.1:2106'
+  http:
+    pool: 20
   phases:
     - duration: 10
       arrivalRate: 100
-  processor: "helpers/converter.js"
-  variables:
-    id:
-      - "1"
+  # processor: "helpers/generatorStress.js"
 scenarios:
   - flow:
+    # - function: "generateRandomProductData"
     - loop:
       - get:
-          url: "/api/reviews/{{ id }}"
-          beforeRequest: "convertIDToInt"
-          json:
-            id: "{{ id }}"
-      count: 10
+          url: "/api/reviews/9990900"
+          # json:
+          #   id: "{{ id }}"
+      count: 25
+    # - log: "Sent request with {{ id }} to /api/reviews/"
