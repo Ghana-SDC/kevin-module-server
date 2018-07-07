@@ -2,6 +2,7 @@ const { ReviewModel } = require("../models/reviewModels.js")
 
 const ReviewCtrl = {
   get: (req, res) => {
+    console.log(req.params);
     ReviewModel.get(req.params.id , (err, data) => {
       (err) && res.send(err).status(400);
       res.send(data).status(200);

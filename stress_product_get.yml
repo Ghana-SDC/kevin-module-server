@@ -1,5 +1,5 @@
 config:
-  target: 'http://127.0.0.1:2106'
+  target: 'http://18.221.221.50:2106'
   http:
     pool: 20
   phases:
