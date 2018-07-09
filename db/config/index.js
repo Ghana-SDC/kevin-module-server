@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
-const url = "mongodb://localhost:27017/reviews";
-// const url = "mongodb://54.85.222.147:27017/reviews";
+// const url = "mongodb://localhost:27017/reviews";
+const url = "mongodb://107.23.3.83:27017/reviews";
 let _db;
 
 MongoClient.connect(url, { poolSize: 20}, function(err, client) {
