@@ -1,0 +1,13 @@
+config:
+  target: 'http://127.0.0.1:2106'
+  http:
+    pool: 20
+  phases:
+    - duration: 10
+      arrivalRate: 100
+scenarios:
+  - flow:
+    - loop:
+      - post:
+          url: "/api/product/artillery-test-post"
+      count: 20

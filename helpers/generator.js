@@ -43,13 +43,13 @@ const writeToFile = (writer) => {
       let helpful_count = faker.random.number( { min: 1, max: 1000 } );
       let verified = faker.random.boolean();
       let productId = faker.random.number( { min: 1, max: 10000000 } );
-      let data = [customer_name, rating, title, date, review, helpful_count, verified, productId].join('');
+      let data = [customer_name, rating, title, date, review, helpful_count, verified, productId].join(',');
       if (i === 0) {
-        writer.write(data.join(','));
+        writer.write(data);
         var end = new Date().getTime();
         console.log((end - start)/1000);
       } else {
-        ok = writer.write(data.join(',') + '\n');
+        ok = writer.write(data + '\n');
       }
     } while (i > 0 && ok);
     if (i > 0) {

@@ -1,0 +1,21 @@
+config:
+  target: 'http://127.0.0.1:2106'
+  http:
+    pool: 20
+  phases:
+    - duration: 10
+      arrivalRate: 100
+scenarios:
+  - flow:
+    - loop:
+      - post:
+          url: "/api/reviews/"
+          json:
+            customer_name: "Kevin Tester"
+            rating: 6
+            title: "THIS IS A TEST"
+            review: "THIS IS MY TEST REVIEW"
+            helpful_count: -1
+            productId: "9500000"
+            verified: "true"
+      count: 20

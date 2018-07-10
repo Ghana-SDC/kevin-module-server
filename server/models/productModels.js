@@ -4,8 +4,8 @@ const { getDB } = require('../../db/config');
 const ProductModel = {
   get: (id, callback) => {
     const db = getDB();
-    const o_id = new mongo.ObjectID(id);
-    db.collection('products').findOne({ _id: o_id }, (err, res) => {
+    let _id = new mongo.ObjectID(id);
+    db.collection('products').findOne({ _id: _id }, (err, res) => {
       if (err) callback(err, null);
       callback(null, res);
     });
@@ -39,10 +39,9 @@ const ProductModel = {
 
   put: (_id, body, callback) => {
     const db = getDB();
-    const o_id = new mongo.ObjectID(_id)
     body.updated_at = new Date(Date.now()).toISOString()
     db.collection('products').updateOne({
-      _id: o_id
+      _id: _id
     },{
       $set: body
     }, (err, res) => {
@@ -51,10 +50,10 @@ const ProductModel = {
     });
   },
 
-  delete: (id, callback) => {
+  delete: (_id, callback) => {
     const db = getDB();
     db.collection('products').deleteOne({
-      _id: mongo.ObjectId(id)
+      _id: _id
     }, (err, res) => {
       if (err) callback(err, null);
       callback(null, res);

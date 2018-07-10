@@ -1,0 +1,17 @@
+config:
+  target: 'http://18.221.221.50:2106'
+  http:
+    pool: 20
+  phases:
+    - duration: 10
+      arrivalRate: 100
+  # processor: "helpers/generatorStress.js"
+scenarios:
+  - flow:
+    # - function: "generateRandomProductData"
+    - loop:
+      - get:
+          url: "/api/product/5b3410ecc4b26644621c8d6e"
+            # json:
+            #   id: "{{ id }}"
+      count: 20

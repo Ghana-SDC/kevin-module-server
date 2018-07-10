@@ -3,9 +3,10 @@ const { getDB } = require('../../db/config');
 
 const ReviewModel = {
   get: (id, callback) => {
-    const query = {"productId": Number(id)};
+    const query = {"product_id": Number(id)};
     const db = getDB();
     db.collection('reviews').find(query).toArray((err, res) => {
+      console.log(res);
       if (err) callback(err, null);
       callback(null, res);
     });
