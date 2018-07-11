@@ -32,7 +32,7 @@ export default class Reviews extends Component {
   };
 
   getProductReviews() {
-    axios.get('/api/reviews/' + this.state.id)
+    axios.get('http://54.84.11.212:8080/api/reviews/' + this.state.id)
     .then(({ data }) => {
       this.setState({ reviews: data });
     })
