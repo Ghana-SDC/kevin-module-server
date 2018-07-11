@@ -1,5 +1,5 @@
 const { MongoClient } = require('mongodb');
-const url = "mongodb://34.239.128.115:27017/reviews";
+const url = "mongodb://54.89.229.228:27017/reviews";
 let _db;
 
 MongoClient.connect(url, { poolSize: 20}, function(err, client) {
