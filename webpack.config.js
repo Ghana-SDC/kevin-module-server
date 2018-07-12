@@ -16,6 +16,17 @@ const common = {
         query: {
           presets: ['react', 'es2015', 'env']
         },
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'css-loader'
+          }, 
+          {
+            loader: 'style-loader'
+          }
+        ]
       }
     ]
   }
