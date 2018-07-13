@@ -4,7 +4,9 @@ const parser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
+const morgan = require('morgan');
 const { Router } = require('./router');
+const PORT = process.env.PORT || 2106; 
 require('../db/config/');
 
 const corOpts = {
@@ -16,6 +18,7 @@ const corOpts = {
 
 const app = express();
 
+app.use(morgan('dev'));
 app.use(cors(corOpts));
 app.use(helmet());
 app.use(parser.json());
@@ -23,8 +26,6 @@ app.use(parser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../static')));
 
 app.use('/api', Router);
-
-const PORT = 2106;
 
 app.listen(PORT, (err) => {
   (err) && console.log('Error connecting to server: ', err);

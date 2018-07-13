@@ -19,7 +19,7 @@ export default class Reviews extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 9999997,
+      id: props.primary_id,
       reviews: [],
     };
     this.getProductReviews = this.getProductReviews.bind(this);
@@ -33,6 +33,7 @@ export default class Reviews extends Component {
 
   getProductReviews() {
     axios.get('http://54.84.11.212:8080/api/reviews/' + this.state.id)
+
     .then(({ data }) => {
       this.setState({ reviews: data });
     })
