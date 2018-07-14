@@ -1,6 +1,6 @@
 # Ratings & Reviews Microservice
 
-This goal of this project was to take an existing legacy microservice and improve the system design by scaling for higher traffic and enterprise-sized databases.  The base microservice is a review and rating component of a full eCommerce product page (modeled after Amazon) built using ReactJS, Node, Express, and PostgreSQL with Styled Components to manage stylesheets. To scale this microservice I  ultimately switched databases to the non-relational MongoDB, deployed the component to multiple EC2 instances with a load balancer to offset the requests, and added server-side rendering to improve the user experience.  These additions led to an improved RPS of 100% with an average latency of under 50ms and reduced page load times.
+This goal of this project was to take an existing legacy microservice and improve the system design by scaling for higher traffic and enterprise-sized databases.  The base microservice is a review and rating component of a full eCommerce product page (modeled after Amazon) built using ReactJS, Node, Express, and PostgreSQL with Styled Components to manage stylesheets. To scale this microservice I  ultimately switched databases to the non-relational MongoDB, deployed the component to multiple micro EC2 instances with a load balancer to offset the requests, and added server-side rendering to improve the user experience.  These additions led to an improved RPS of 100% with an average latency of under 50ms and reduced page load times.
 
 # Table of Contents
 - [Preface](#preface)
@@ -11,11 +11,11 @@ This goal of this project was to take an existing legacy microservice and improv
     - [Postgres](#postgres)
     - [MongoDB](#mongodb)
   - [Optimization](#optimization)
-  - [Conclusions](#conclusions)
+  - [Benchmarking Conclusions](#benchmarking-conclusions)
 - [Baseline Stress Testing](#baseline-stress-testing)
 - [Deployment](#deployment)
-  -[System Architecture](#system-architecture)
-- [Deployed Stress Testing](#deployed-stress-testing)
+  - [System Architecture](#system-architecture)
+  - [Deployed Stress Testing](#deployed-stress-testing)
 
 ## Preface
 The purpose of this project was to take an existing application and scale it in size.  As such the main takeaways from this readme are the stages of this project that ulimately led to the final decisions made with accompanying statistics.  Instructions on installation and configuration are TBD
@@ -92,18 +92,36 @@ As part of benchmarking I needed to optimize lookups based off of foreign keys (
 |Postgres|2382|2395|.314|6.467|
 |MongoDB|26802|29305|4|4|
 
-### Conclusions
-Overall MongoDB proved to be the quicker of the two databases tested.  While Postgres was the quickest to import a single unrelated collection of data, times spiked as soon as related data was imported.  Importing a single collection is slower with Mongo but does not need to check for relations with other collections, and as a result experienced the quickest times overall, just over 16 minutes faster.  Some requests MongoDB completely outperformed Postgres, and for other requests where query times were similar I noticed that MongoDB was more consistent with its results.  Lastly, MongoDB benefited the most from indexing and vastly improved the query time as opposed to Postgres.  With these results I determined MongoDB to be the database of choice moving forward
-
+### Benchmarking Conclusions
+Overall MongoDB proved to be the quicker of the two databases tested.  While Postgres was the quickest to import a single unrelated collection of data, times spiked as soon as related data was imported.  Importing a single collection is slower with Mongo but does not need to check for relations with other collections, and as a result experienced the quickest times overall, just over 16 minutes faster.  Some requests MongoDB completely outperformed Postgres, and for other requests where query times were similar I noticed that MongoDB was more consistent with its results.  Lastly, MongoDB benefited the most from indexing and vastly improved the query time as opposed to Postgres.  With these results I determined MongoDB to be the database of choice moving forward.
 
 ## Baseline Stress Testing
-TBD
+With a database selected, I then performed stress testing locally to set a baseline of performance.  I tested both GET and POST requests on both types of collections to measure the highest Requests Per Seconed (RPS) while maintaining an average latency of under 2000ms and within an error rate of <1%.  Based off these criteria I was able to maintain the following RPS:
+
+|Request|Type|RPS|Avg Latency (ms)|Error Rate|
+|-------|----|---|----------------|----------|
+|GET|Products|565|504|0.0%|
+|GET|Reviews|624|1715|0.0%|
+|POST|Products|451|1939|0.0%|
+|POST|Reviews|633|1179|0.0%|
 
 ## Delpoyment
-TBD
+Having the baseline statistics I then moved to deployment of the component.  I first used Docker to build images for my main component's server and database and then spun up separate micro EC2 instances for each to then pull the docker images into.  However with just these two instances the performance dramatically decreased given the constraint of working with micro instances.  I needed to reconfigure the system design
 
-### System Architecture
-TBD
+### System Design Architecture
+Since I did not want to spend extra money on more expensive instance types, I decided to horizontally scale my application by implementing a load balancer via NGINX.  I initially tripled the number of servers, each in their own instance. In another seperate instance, I configured my load balancer to send requests upstream based off the least number of connections.  Now when I tested my application I routed all requests to the load balancer which then spread out the requests to my various instances.  I later added a 4th server instance but stopped after that as the performance gains were minimal.  
 
-## Deployed Stress Testing
-TBD
+### Deployed Stress Testing
+With this new architecture in place, stress testing this configuration yielded significant gains:  RPS improved by at least 100% for all types of routes with an average latency dropping extremely within the error bounds
+
+|Request|Type|RPS|% RPS Change|Avg Latency (ms)|Error Rate|
+|-------|----|---|------------|----------------|----------|
+|GET|Products|1131|100.18%|150|0.55%|
+|GET|Reviews|1246|99.68%|9|0.0%|
+|POST|Products|1159|156.98%|60|0.0%|
+|POST|Reviews|1499|136.81%|5|0.0%|
+
+
+
+
+![image](https://i.imgur.com/Dl7B1n4.png)
